@@ -15,18 +15,22 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class UsuarioActivity extends AppCompatActivity implements Response.Listener<JSONObject>,Response.ErrorListener {
 
     EditText jetusuario, jetnombre,jetclave,jetcorreo;
     CheckBox jcbactivo;
-    RequestQueue rq;
-    JsonRequest jrq;
+    RequestQueue rq,au;
+    JsonRequest jrq,aux;
     String usr, nombre, correo, clave;
     Byte sw;
 
@@ -43,6 +47,7 @@ public class UsuarioActivity extends AppCompatActivity implements Response.Liste
         jetclave=findViewById(R.id.etclave);
         jcbactivo=findViewById(R.id.cbactivo);
         rq= Volley.newRequestQueue(this);
+        au=Volley.newRequestQueue(this);
         sw=0;
     }
 
@@ -53,7 +58,7 @@ public class UsuarioActivity extends AppCompatActivity implements Response.Liste
             jetusuario.requestFocus();
         }
         else {
-            String url = "http://172.16.62.46:80/WebService/consulta.php?usr="+usr;
+            String url = "http://172.18.70.0:80/WebService/consulta.php?usr="+usr;
             jrq = new JsonObjectRequest(Request.Method.GET,url,null,this,this);
             rq.add(jrq);
         }
@@ -76,14 +81,48 @@ public class UsuarioActivity extends AppCompatActivity implements Response.Liste
         jcbactivo.setChecked(false);
         jetusuario.requestFocus();
     }
-
     public void Guardar(View view){
         usr=jetusuario.getText().toString();
         nombre=jetnombre.getText().toString();
         correo=jetcorreo.getText().toString();
         clave=jetclave.getText().toString();
 
-
+        if (usr.isEmpty() || nombre.isEmpty() || correo.isEmpty() || clave.isEmpty()){
+            Toast.makeText(this, "Todos los datos son requeridos", Toast.LENGTH_SHORT).show();
+            jetusuario.requestFocus();
+        }
+        else{
+            String url = "http://172.18.70.0:80/WebService/registrocorreo.php";
+            StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>()
+                    {
+                        @Override
+                        public void onResponse(String response) {
+                            Limpiar_campos();
+                            Toast.makeText(getApplicationContext(), "Registro de usuario realizado!", Toast.LENGTH_LONG).show();
+                        }
+                    },new Response.ErrorListener()
+            {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getApplicationContext(), "Registro de usuario incorrecto!", Toast.LENGTH_LONG).show();
+                }
+            }
+            ) {
+                @Override
+                protected Map<String, String> getParams()
+                {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("usr",jetusuario.getText().toString().trim());
+                    params.put("nombre", jetnombre.getText().toString().trim());
+                    params.put("correo",jetcorreo.getText().toString().trim());
+                    params.put("clave",jetclave.getText().toString().trim());
+                    return params;
+                }
+            };
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+            requestQueue.add(postRequest);
+        }
     }
 
     @Override
@@ -93,7 +132,7 @@ public class UsuarioActivity extends AppCompatActivity implements Response.Liste
 
     @Override
     public void onResponse(JSONObject response) {
-        Toast.makeText(this, "Uusario encontrado", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Usario encontrado", Toast.LENGTH_SHORT).show();
         JSONArray jsonArray= response.optJSONArray("datos");
         JSONObject jsonObject= null;
         try {
@@ -111,4 +150,130 @@ public class UsuarioActivity extends AppCompatActivity implements Response.Liste
             e.printStackTrace();
         }
     }
+
+    public void Actualizar (View view){
+        usr=jetusuario.getText().toString();
+        nombre=jetnombre.getText().toString();
+        correo=jetcorreo.getText().toString();
+        clave=jetclave.getText().toString();
+        if (usr.isEmpty() || nombre.isEmpty() || correo.isEmpty() || clave.isEmpty()){
+            Toast.makeText(this, "Todos los datos son requeridos", Toast.LENGTH_SHORT).show();
+            jetusuario.requestFocus();
+        }
+        /*else {
+            String url = "http://192.168.0.14:80/WebService/actualiza.php";
+                    StringRequest putRequest= new StringRequest(Request.Method.PUT, url,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    Limpiar_campos();
+                                    Toast.makeText(getApplicationContext(), "Usuario actualizado!", Toast.LENGTH_LONG).show();
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(getApplicationContext(), "Actualización incorrecta!", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    ){
+                        @Override
+                        protected Map<String, String> getParams()
+                        {
+                            Map<String, String> params = new HashMap<String, String>();
+                            params.put("usr",jetusuario.getText().toString().trim());
+                            params.put("nombre", jetnombre.getText().toString().trim());
+                            params.put("correo",jetcorreo.getText().toString().trim());
+                            params.put("clave",jetclave.getText().toString().trim());
+                            return params;
+                        }
+                    };
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+            requestQueue.add(putRequest);
+        }*/
+
+        else{
+            String url = "http://172.18.70.0:80/WebService/actualiza.php?usr="+usr+"&nombre="+nombre+"&correo="+correo+"&clave="+clave+"";
+            aux = new JsonObjectRequest(Request.Method.PUT, url, null, null, null);
+            au.add(aux);
+            Toast.makeText(this, "Actualizado", Toast.LENGTH_SHORT).show();
+            Limpiar_campos();
+        }
+    }
+
+    public void Eliminar(View view){
+        usr=jetusuario.getText().toString();
+        if (usr.isEmpty()){
+            Toast.makeText(this, "El usuario es requerido", Toast.LENGTH_SHORT).show();
+            jetusuario.requestFocus();
+        }
+        else{
+           String url = "http://172.18.70.0:80/WebService/elimina.php";
+            StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>()
+                    {
+                        @Override
+                        public void onResponse(String response) {
+                            Limpiar_campos();
+                            Toast.makeText(getApplicationContext(), "Registro eliminado!", Toast.LENGTH_LONG).show();
+                        }
+                    },
+                    new Response.ErrorListener()
+                    {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(getApplicationContext(), "Registro no eliminado!", Toast.LENGTH_LONG).show();
+                        }
+                    }
+            ) {
+                @Override
+                protected Map<String, String> getParams()
+                {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("usr",jetusuario.getText().toString().trim());
+                    return params;
+                }
+            };
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+            requestQueue.add(postRequest);
+        }
+    }
+
+    public void Anular(View view){
+        usr=jetusuario.getText().toString();
+        if (usr.isEmpty()){
+            Toast.makeText(this, "El usuario es requerido", Toast.LENGTH_SHORT).show();
+            jetusuario.requestFocus();
+        }
+        else{
+            String url = "http://172.18.70.0:80/WebService/anula.php";
+            StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>()
+                    {
+                        @Override
+                        public void onResponse(String response) {
+                            Limpiar_campos();
+                            Toast.makeText(getApplicationContext(), "Registro anulado!", Toast.LENGTH_LONG).show();
+                        }
+                    },
+                    new Response.ErrorListener()
+                    {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(getApplicationContext(), "Registro no anulado!", Toast.LENGTH_LONG).show();
+                        }
+                    }
+            ) {
+                @Override
+                protected Map<String, String> getParams()
+                {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("usr",jetusuario.getText().toString().trim());
+                    return params;
+                }
+            };
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+            requestQueue.add(postRequest);
+        }
+    }
+
 }

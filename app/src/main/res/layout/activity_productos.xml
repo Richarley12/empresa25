@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:outlineAmbientShadowColor="#F8F7F0"
+
+    tools:context=".Productos_Activity">
+
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="Productos"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/etenombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:ems="10"
+                    android:hint="NOMBRE DEL PRODUCTO"
+                    android:inputType="textPersonName"
+                    android:minHeight="48dp"
+                    android:textAlignment="center"
+                    android:textColor="#120F0F"
+                    android:textColorHint="#757575"
+                    android:textSize="24sp" />
+
+                <EditText
+                    android:id="@+id/etreferencia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ems="10"
+                    android:hint="REFERENCIA: 1234"
+                    android:inputType="textPersonName"
+                    android:minHeight="48dp"
+                    android:textAlignment="center"
+                    android:textColor="#151313"
+                    android:textColorHint="#757575"
+                    android:textSize="24sp" />
+
+                <CheckBox
+                    android:id="@+id/cbactivo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginRight="10dp"
+                    android:checked="false"
+                    android:enabled="false"
+                    android:text="Activo"
+                    android:textColor="#B96C6767"
+                    android:textSize="20dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/etvalor"
+                        android:layout_width="129dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="1dp"
+                        android:ems="10"
+                        android:hint="VALOR"
+                        android:inputType="number"
+                        android:textAlignment="center"
+                        android:textColor="#B0000000"
+                        android:textColorHint="#DFDADA"
+                        android:textSize="24sp"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                    <EditText
+                        android:id="@+id/etmarcas"
+                        android:layout_width="138dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="2dp"
+                        android:ems="10"
+                        android:hint="MARCA"
+                        android:inputType="textPersonName"
+                        android:textAlignment="center"
+                        android:textColor="#B0000000"
+                        android:textColorHint="#DFDADA"
+                        android:textSize="24sp"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                    <EditText
+                        android:id="@+id/etmodelo"
+                        android:layout_width="128dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="1dp"
+                        android:ems="10"
+                        android:hint="MODELO"
+                        android:inputType="number"
+                        android:textAlignment="center"
+                        android:textColor="#B0000000"
+                        android:textColorHint="#DFDADA"
+                        android:textSize="24sp"
+                        tools:ignore="TouchTargetSizeCheck" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                </LinearLayout>
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="60dp"
+                    android:textAlignment="center"
+                    android:visibility="visible"
+                    tools:visibility="visible">
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="15dp"
+                        android:background="#F3EFEF"
+                        android:gravity="center_horizontal">
+
+                        <Button
+                            android:id="@+id/btnguardar"
+                            android:layout_width="227dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="20dp"
+                            android:layout_weight="1"
+                            android:onClick="GuardarP"
+                            android:text="GUARDAR"
+                            android:textColor="#DFDADA"
+                            android:textSize="18sp"
+                            app:cornerRadius="15dp" />
+
+                        <Button
+                            android:id="@+id/btncosultar"
+                            android:layout_width="194dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="#F44336"
+                            android:onClick="Consulta"
+                            android:text="CONSULTAR"
+                            android:textColor="#DFDADA"
+                            android:textSize="18sp"
+                            app:cornerRadius="20dp" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="15dp"
+                        android:background="#F3EFEF"
+                        android:textAlignment="center">
+
+                        <Button
+                            android:id="@+id/btnanular"
+                            android:layout_width="227dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="20dp"
+                            android:layout_weight="1"
+                            android:onClick="Anularp"
+                            android:text="ANULAR"
+                            android:textColor="#DFDADA"
+                            android:textSize="18sp"
+                            app:cornerRadius="15dp" />
+
+                        <Button
+                            android:id="@+id/btnmodificar"
+                            android:layout_width="111dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="Actualizap"
+                            android:text="MODIFICAR"
+                            android:textColor="#DFDADA"
+                            android:textSize="18sp"
+                            app:cornerRadius="15dp" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="15dp"
+                        android:background="#F3EFEF"
+                        android:textAlignment="center">
+
+                        <Button
+                            android:id="@+id/btregresar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal"
+                            android:onClick="Regresarp"
+                            android:text="REGRESAR"
+                            android:textColor="#DFDADA"
+                            android:textSize="18sp"
+                            android:visibility="visible"
+                            app:cornerRadius="15dp" />
+                    </TableRow>
+
+                </TableLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

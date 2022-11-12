@@ -178,11 +178,12 @@
                 android:text="Consultar" />
 
             <Button
-                android:id="@+id/btneliminar"
+                android:id="@+id/btnactualizar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:text="Eliminar" />
+                android:onClick="Actualizar"
+                android:text="Actualizar" />
 
 
         </LinearLayout>
@@ -198,6 +199,7 @@
                 android:id="@+id/btnanular"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
+                android:onClick="Anular"
                 android:text="Anular" />
 
             <Button
